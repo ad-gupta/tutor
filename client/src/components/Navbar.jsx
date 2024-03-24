@@ -38,6 +38,7 @@ const Navbar = () => {
     setActiveMenu(!activeMenu);
   };
   // console.log(user.data.message.avatar.url)
+  console.log(isAuth)
 
 
   return (

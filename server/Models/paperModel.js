@@ -17,6 +17,14 @@ const paperSchema = new mongoose.Schema({
         type: Number,
         require: true,
     },
+    year: {
+        type: Number,
+        require: true
+    },
+    category: {
+        type: String,
+        require: true
+    },
     createdAt: {
         type: Date,
         default: Date.now

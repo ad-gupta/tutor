@@ -84,7 +84,7 @@ const MyProfile = () => {
   }
 
   return (
-    <div className="flex items-center h-screen justify-evenly">
+    <div className="flex items-center h-screen justify-evenly max-sm:flex-col pt-20 w-[100%]">
       {user.isAuthenticated && userDetails && (
         <>
           <div className=" hover:shadow-2xl p-4">
@@ -94,7 +94,7 @@ const MyProfile = () => {
                 htmlFor="fileinput"
                 className="text-sm font-medium text-gray-600 cursor-pointer"
               >
-                <div className="w-[30vh] h-[30vh]">
+                <div className="w-[30vh] h-[30vh] max-sm:w-full">
                   <img src={img} alt="Preview" className="w-[30vh] h-[30vh]" />
                 </div>
               </label>

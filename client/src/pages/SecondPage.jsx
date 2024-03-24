@@ -3,7 +3,7 @@ import { FcApproval } from "react-icons/fc";
 
 const SecondPage = () => {
   return (
-    <div className="m-5 bg-slate-50 h-[95vh] rounded-xl max-sm:h-[170vh]">
+    <div className="m-5 bg-slate-50 h-[110vh] rounded-xl max-sm:h-[170vh]">
         <div className="flex items-center justify-evenly max-sm:flex-col-reverse">
             <div className="w-[50%] p-5 max-lg:w-[80%]">
                 <h1 className="text-4xl font-bold py-3 text-blue-700">

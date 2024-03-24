@@ -19,7 +19,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userDetailsFail, userDetailsRequest, userDetailsSuccess } from './reducers/user';
 import axios from 'axios';
 import AddTutor from './components/AddTutor.jsx'
-import AddToCart from './pages/AddToCart.jsx'
+import UpdateCourse from './pages/UpdateCourse.jsx';
+import MyOrders from './pages/MyOrders.jsx';
+import Success from './pages/Success.jsx';
+import Fail from './pages/Fail.jsx';
+import UploadPyq from './pages/UploadPyq.jsx'
 
 const style = { 
   background: 'rgb(249,250,228)',
@@ -73,7 +77,11 @@ const App = () => {
           <Route path='/me' element = {<MyProfile />} />
           <Route path='/join' element = {<AddTutor />} />
           <Route exact path='/updatePassword' element = {<UpdatePassword />} />
-          <Route exact path='/addToCart' element={<AddToCart />} />
+          <Route exact path='/myOrders' element = {<MyOrders />} />
+          <Route exact path='/editTutorial/:id' element= {<UpdateCourse />} />
+          <Route exact path='/payment/success' element={<Success />} />
+          <Route exact path='/payment/cancel' element={<Fail />} />
+          <Route exact path='/upload/pyq' element= {<UploadPyq />} />
         </Route>
       </Routes>
       <Footer />

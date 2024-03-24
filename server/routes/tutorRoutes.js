@@ -1,10 +1,12 @@
 import express from 'express'
-import {addCourse, deleteMyCourses, deleteReview, getAllCourse, getCourseDetails, getCourseReviews, getMyCourses, rateTutorials} from '../Controllers/tutorControllers.js'
+import {addCourse, deleteMyCourses, deleteReview, editCourse, getAllCourse, getCourseDetails, getCourseReviews, getMyCourses, rateTutorials} from '../Controllers/tutorControllers.js'
 import { isAuthorised } from '../middleware/auth.js';
 
 const router = express.Router();
 
 router.route('/addCourse').post(isAuthorised, addCourse)
+
+router.route('/editCourse/:id').put(isAuthorised, editCourse)
 
 router.route('/getCourse').get(getAllCourse)
 

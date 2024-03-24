@@ -6,6 +6,7 @@ import userRoute from "./routes/userRoutes.js";
 import tutorRoute from "./routes/tutorRoutes.js";
 import orderRoute from "./routes/orderRoutes.js";
 import paperRoute from "./routes/paperRoutes.js"
+import contactRoute from "./routes/contactRoute.js"
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -22,6 +23,7 @@ const connectToDB = () => {
     })
     .catch((err) => console.log(err));
 };
+app.use('/files', express.static('files'))
 app.use(cors())
 app.use(express.json());
 app.use(bodyParser.json());
@@ -32,6 +34,7 @@ app.use("/api/v1", userRoute);
 app.use("/api/v1", tutorRoute);
 app.use("/api/v1", orderRoute)
 app.use("/api/v1", paperRoute)
+app.use("/api/v1", contactRoute)
 
 app.get(
   "/",

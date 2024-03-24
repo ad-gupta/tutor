@@ -35,7 +35,7 @@ const ReviewCard = ({ id, revId, name, rating, comment, date, image }) => {
   };
   return (
     <div className="">
-      <div className="flex items-end gap-3 w-full mt-2 border-black border-2 rounded-lg px-2">
+      <div className="flex items-end gap-3 w-full border-slate-400 border-b-2 px-2 bg-slate-100 rounded-md">
         <img src={image} alt="img" className="rounded-full h-10 w-auto mb-3" />
         <div className="">
           <div className="flex items-center gap-3">

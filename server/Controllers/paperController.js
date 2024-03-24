@@ -3,7 +3,7 @@ import catchAsyncError from "../middleware/catchAsyncError.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 
 export const getPapers = catchAsyncError(async (req, res, next) => {
-  const resultperpage = 4;
+  const resultperpage = 6;
   // const courseCount = await Tutor.countDocuments();
 
   const apiFeature = new ApiFeatures(Paper.find(), req.query).search().filter();
@@ -23,13 +23,15 @@ export const getPapers = catchAsyncError(async (req, res, next) => {
 });
 
 export const postPaper = catchAsyncError(async (req, res, next) => {
-  const { course, price } = req.body;
+  const { title, file, price, year, category } = req.body;
 
   const paper = await Paper.create({
     user: req.user._id,
-    course,
-    file: "sample",
+    title,
+    file,
     price,
+    year,
+    category
   });
 
   res.status(201).json({

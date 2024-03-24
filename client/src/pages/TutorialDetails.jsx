@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   reviewAddFail,
   reviewAddRequest,
@@ -13,6 +13,10 @@ import { Link, useParams } from "react-router-dom";
 import ReviewCard from "../components/ReviewCard";
 import { useAlert } from "react-alert";
 import { Rating } from "@material-ui/lab";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { addToCartFail, addToCartReq, addToCartSuccess } from "../reducers/order";
 
 const getProductDetails = async (dispatch, id) => {
   try {
@@ -27,6 +31,20 @@ const getProductDetails = async (dispatch, id) => {
   }
 };
 
+const addToCart = async (dispatch, id, alert) => {
+  try {
+    dispatch(addToCartReq())
+    const {data} = await axios.post(`/api/v1/addToCart/${id}`);
+    console.log(data)
+    dispatch(addToCartSuccess(data));
+    // console.log(data)
+    alert.success("added to cart")
+  } catch (error) {
+    alert.error("order not added to cart")
+    dispatch(addToCartFail(error.response.data.message))
+  }
+}
+
 const TutorialDetails = () => {
   const [tutorial, setTutorial] = useState({});
   const [rating, setRating] = useState(0);
@@ -34,6 +52,7 @@ const TutorialDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const alert = useAlert();
+  const {isAuthenticated} = useSelector(state => state.user)
 
   useEffect(() => {
     getProductDetails(dispatch, id)
@@ -46,6 +65,10 @@ const TutorialDetails = () => {
   const handleReviewAdd = async (e) => {
     e.preventDefault();
     try {
+      if(!isAuthenticated) {
+        alert.error("Login first")
+        return;
+      }
       dispatch(reviewAddRequest());
       const rev = {
         rating,
@@ -60,41 +83,70 @@ const TutorialDetails = () => {
       dispatch(reviewAddFail());
     }
   };
+
+  const handleAddToCart = () => {
+    addToCart(dispatch, id, alert);
+  }
   const options = {
     value: rating,
     readOnly: false,
     precision: 0.5,
     name: comment,
   };
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 10000,
+    cssEase: "linear",
+  };
 
   return (
-    <div className="flex justify-evenly pt-28">
+    <div className="flex justify-evenly pt-28 max-sm:flex-col">
       {/* Left side (Image and Video) */}
-      <div className="">
-        <img
-          src={tutorial.image}
-          alt="Course"
-          className="w-[40vh] h-[30vh] mb-4 rounded-lg m-5"
-        />
-        {tutorial.video != "sample video" && (
-          <iframe
-            title="Video"
-            src={tutorial.video}
-            frameborder="0"
-            allowfullscreen
-            className="w-[40vh] h-[30vh] mb-4 rounded-lg"
-          ></iframe>
-        )}
+      <div className="lg:w-[35%] lg:h-[80vh] p-5 bg-orange-200">
+        <Slider {...settings}>
+          <div className="">
+            <img
+              src={tutorial.image}
+              alt="Course"
+              className="mb-10 lg:h-[60vh] lg:w-[40vw] max-sm:h-[62vh] max-sm:w-full rounded-lg"
+            />
+          </div>
+          <div className="">
+            {tutorial.video !== "sample video" ? (
+              <iframe
+                title="Video"
+                src={tutorial.video}
+                allowFullScreen // Corrected attribute name
+                className="h-[60vh] w-[33vw] max-sm:h-[62vh] max-sm:w-full rounded-lg"
+              ></iframe>
+            ) : (
+              <img
+                src='/video_upload.jpg'
+                alt="Course"
+                className="mb-10 lg:h-[60vh] lg:w-[40vw] max-sm:h-[62vh] max-sm:w-full rounded-lg"
+              />
+            )}
+          </div>
+        </Slider>
       </div>
 
       <div className="p-4">
         <h2 className="text-5xl font-bold mb-4">{tutorial.title}</h2>
         <p className="text-lg mb-2">Tutor: {tutorial.tutor}</p>
         <p className="text-lg mb-2">Fee: ₹{tutorial.fee}</p>
-        <p className="text-lg mb-2">Description:<br/> {tutorial.description}</p>
+        <p className="text-lg mb-2">
+          Description:
+          <br /> {tutorial.description}
+        </p>
 
-        <Link to="/addToCart">
-          <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-10">
+        <Link to={isAuthenticated ? `/myOrders` : '/login'}>
+          <button onClick={handleAddToCart} className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-10">
             Buy Now
           </button>
         </Link>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="bg-slate-100 h-100 w-64 rounded absolute top-10 right-5 text-yellow-900">
+    <div className="bg-slate-100 h-100 w-64 rounded absolute top-10 right-5 text-yellow-900 ">
       <div className="p-5">
         <CloseIcon className="float-right text-red-700" />
       </div>
@@ -27,7 +27,7 @@ const Sidebar = () => {
             <Link to="/contact">Contact</Link>
           </li>
           <li className="pl-7 justify-center font-semibold hover:bg-slate-200 rounded p-1">
-            <Link to="/mytutors">My tutors</Link>
+            <Link to="/myOrders">My Orders</Link>
           </li>
         </ul>
         <div className="pl-7 mt-10">

@@ -40,6 +40,7 @@ const getProducts = async (
     }
 
     const { data } = await axios.get(link);
+    console.log(data)
 
     dispatch(tutorialSuccess(data));
   } catch (error) {
@@ -52,6 +53,7 @@ const Learn = () => {
   const [price, setPrice] = useState([0, 25000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
+  const [loading, setloading] = useState(false)
 
   const { keyword } = useParams();
 
@@ -66,21 +68,19 @@ const Learn = () => {
 
   const {
     tutorials,
-    loading,
     error,
     courseCount,
     resultperpage,
     filteredTutorialsCount,
   } = useSelector((state) => state.tutor);
 
-  let count = filteredTutorialsCount;
   useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
+    setloading(true);
+    if(error) alert.error(error)
     getProducts(dispatch, keyword, currentPage, price, category, ratings);
-  }, [keyword, dispatch, currentPage, price, category, error, ratings]);
+    setloading(false)
+  }, [keyword, dispatch, currentPage, price, category, ratings]);
+  let count = filteredTutorialsCount;
   return (
     <div className="min-h-screen">
       {loading ? (
@@ -89,7 +89,7 @@ const Learn = () => {
         <div className="pt-28 flex justify-center max-sm:flex-col max-sm:mb-10">
           {/* filter box */}
 
-          <div className="bg-white w-64 ml-5 h-[55vh] p-5 rounded-md max-sm:mb-8 text-center max-sm:w-[90%] max-sm:px-7 pb-5">
+          <div className="bg-white w-64 ml-5 max-h-[70vh] p-5 rounded-md max-sm:mb-8 text-center max-sm:w-[90%] max-sm:px-7 pb-5">
             {/* Your filter box content */}
             <p className="">Price</p>
             <Slider

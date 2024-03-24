@@ -3,16 +3,18 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./reducers/user.js";
 import tutorReducer from "./reducers/tutor.js";
-import detailReducer from "./reducers/tutorialDetails.js"
-// import paperReducer from "./reducers/paper.js";
-// import orderReducer from "./reducers/order.js";
+import detailReducer from "./reducers/tutorialDetails.js";
+import myCoursesReducer from "./reducers/myCourses.js";
+import paperReducer from "./reducers/paper.js";
+import orderReducer from "./reducers/order.js";
 
 const rootReducer = combineReducers({
   user: userReducer,
   tutor: tutorReducer,
-  tutorialDetails: detailReducer
-  //   paper: paperReducer,
-  //   order: orderReducer,
+  tutorialDetails: detailReducer,
+  myCourses: myCoursesReducer,
+  paper: paperReducer,
+  order: orderReducer,
 });
 
 const persistConfig = {
@@ -22,7 +24,6 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 
 export const store = configureStore({
   reducer: persistedReducer,

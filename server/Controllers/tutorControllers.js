@@ -34,9 +34,12 @@ export const getCourseDetails = catchAsyncError (async (req, res, next) => {
 // tutor
 export const editCourse = catchAsyncError(async (req, res, next) => {
   let course = await Tutor.findById(req.params.id);
-
+  // console.log(course)
+  const id1 = course.name
+  const id2  = (req.user._id)
   if (!course) return next(new ErrorHandler("course not found", 400));
 
+  if(!id1.equals(id2)) next(new ErrorHandler("You cannot edit others course", 400))
   course = await Tutor.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
